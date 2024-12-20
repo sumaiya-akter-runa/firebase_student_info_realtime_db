@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "735023328235",
+    "firebase_url": "https://student-info-6aae5-default-rtdb.firebaseio.com",
+    "project_id": "student-info-6aae5",
+    "storage_bucket": "student-info-6aae5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735023328235:android:61aff996f4204dfd3587ae",
+        "android_client_info": {
+          "package_name": "com.example.firebase_student_info_realtime_db"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbTtaZr2CBIxt8FjlWMmxzN0MnRaeWfPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
