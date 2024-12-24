@@ -42,8 +42,8 @@ class HomeScreen extends StatelessWidget {
                     msg: "Navigating to Add Student",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
-                    backgroundColor: Colors.blue,
-                    textColor: Colors.white,
+                    backgroundColor: Color(0xFFC08552),
+                    textColor: Colors.black,
                     fontSize: 16.0,
                   );
                   Navigator.push(
@@ -60,8 +60,8 @@ class HomeScreen extends StatelessWidget {
                     msg: "Navigating to View All Students",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
-                    backgroundColor: Colors.blue,
-                    textColor: Colors.white,
+                    backgroundColor: Color(0xFFC08552),
+                    textColor: Colors.black,
                     fontSize: 16.0,
                   );
                   Navigator.push(

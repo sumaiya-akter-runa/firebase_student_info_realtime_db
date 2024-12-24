@@ -1,29 +1,66 @@
 import 'package:flutter/material.dart';
 
 class AddStudentScreen extends StatefulWidget {
+  final String? studentId; // For identifying the student to update
+  final Map<String, String>? studentData; // Existing data for the student
+
+  const AddStudentScreen({Key? key, this.studentId, this.studentData}) : super(key: key);
+
   @override
   _AddStudentScreenState createState() => _AddStudentScreenState();
 }
 
 class _AddStudentScreenState extends State<AddStudentScreen> {
-  // Declare TextEditingControllers to manage the input values
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
 
-  // Declare a GlobalKey for form validation
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // Save or update student data
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize controllers with existing data if editing
+    if (widget.studentData != null) {
+      nameController.text = widget.studentData!['name'] ?? '';
+      phoneController.text = widget.studentData!['phone'] ?? '';
+      emailController.text = widget.studentData!['email'] ?? '';
+      locationController.text = widget.studentData!['location'] ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers to free resources
+    nameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    locationController.dispose();
+    super.dispose();
+  }
+
   void _saveStudent() {
     if (_formKey.currentState?.validate() ?? false) {
-      // If the form is valid, print the student info (or save it to a database)
-      print('Student Name: ${nameController.text}');
-      print('Phone: ${phoneController.text}');
-      print('Email: ${emailController.text}');
-      print('Location: ${locationController.text}');
-      // Handle your save or update logic here (e.g., save to a database)
+      final newStudent = {
+        'name': nameController.text,
+        'phone': phoneController.text,
+        'email': emailController.text,
+        'location': locationController.text,
+      };
+
+      if (widget.studentId != null) {
+        // Logic to update student in database
+        print('Updating student with ID ${widget.studentId}');
+        print('Updated Data: $newStudent');
+      } else {
+        // Logic to add new student to database
+        print('Adding new student');
+        print('Student Data: $newStudent');
+      }
+
+      Navigator.pop(context); // Return to the previous screen
     }
   }
 
@@ -32,13 +69,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Student Info',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
+          widget.studentId == null ? 'Add Student Info' : 'Edit Student Info',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color(0xFFC08552), // Chocolate color for AppBar
+        backgroundColor: Color(0xFFC08552),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -46,8 +80,8 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFFC08552).withOpacity(0.5), // Tan color (#c08552)
-              Color(0xFF5D2A42), // Deep maroon color (#5d2a42)
+              Color(0xFFC08552).withOpacity(0.5),
+              Color(0xFF5D2A42),
             ],
           ),
         ),
@@ -66,7 +100,10 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                 SizedBox(height: 20),
                 _buildTextField(locationController, 'Location', Icons.location_on),
                 SizedBox(height: 30),
-                _buildGradientButton('Save/Update', _saveStudent),
+                _buildGradientButton(
+                  widget.studentId == null ? 'Add Student' : 'Save Changes',
+                  _saveStudent,
+                ),
               ],
             ),
           ),
@@ -75,7 +112,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     );
   }
 
-  // TextField widget with validation
   Widget _buildTextField(TextEditingController controller, String label, IconData icon) {
     return TextFormField(
       controller: controller,
@@ -95,7 +131,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     );
   }
 
-  // Gradient button widget
   Widget _buildGradientButton(String text, Function onPressed) {
     return GestureDetector(
       onTap: () => onPressed(),
@@ -105,17 +140,17 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
           gradient: LinearGradient(
             colors: [
               Color(0xFF5D2A42),
-              Color(0xFFC08552), // Tan color (#c08552)
-              Color(0xFF5D2A42), // Deep maroon color (#5d2a42)
+              Color(0xFFC08552),
+              Color(0xFF5D2A42),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(30), // Rounded corners
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(
-            width: 2, // Border width
-            style: BorderStyle.solid, // Solid border
-            color: Colors.black, // Border color
+            width: 2,
+            style: BorderStyle.solid,
+            color: Colors.black,
           ),
           boxShadow: [
             BoxShadow(
